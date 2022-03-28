@@ -8,8 +8,8 @@ const dashboard = new ParseDashboard({
         "appName": process.env.NAME
     }],
     "users": [{
-        "user": "meeplab",
-        "pass": "meeplab5all!"
+        "user": "user",
+        "pass": "pass"
     }]
 }, { allowInsecureHTTP: true })
 
