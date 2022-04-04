@@ -85,6 +85,41 @@ app.get('/test', function(req, res) {
     res.status(200).send({status:"success",message:"Welcome To Testing API"})
 })
 
+app.get('/record', function(req, res) {
+  const Usuarios = Parse.Object.extend("UsersSystem");
+  const query  = new Parse.Query(Usuarios)
+
+  query.equalTo("exists", true);
+  query.equalTo("active", true);
+
+  const results = await query.find();
+  alert("Successfully retrieved " + results.length + " scores.");
+  // Do something with the returned Parse.Object values
+  
+  res.status(200).send({status:"success",error: null, data: results, message:"Welcome To Records API"})
+})
+
+app.post('/record/add', function(req, res) {
+  const Usuarios = Parse.Object.extend("UsersSystem");
+  const newuser = new Usuarios();
+
+  newuser.set("score", 1337);
+  newuser.set("playerName", "Sean Plott");
+  newuser.set("cheatMode", false);
+
+  newuser.save()
+  .then((newUser) => {
+    // Execute any logic that should take place after the object is saved.
+    log('New object created with objectId: ' + newUser.id);
+    res.status(200).send({status:"success",error: null, data: newUser, message:"Welcome To Records API"})
+  }, (error) => {
+    // Execute any logic that should take place if the save fails.
+    // error is a Parse.Error with an error code and message.
+    log('Failed to create new object, with error code: ' + error.message);
+    res.status(400).send({status:"failure",error: error, data: null, message:"Welcome To Records API"})
+  });
+})
+
 app.get('*', function(req, res){
   res.status(404)
 
