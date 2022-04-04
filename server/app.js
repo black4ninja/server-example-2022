@@ -92,11 +92,17 @@ app.get('/record', function(req, res) {
   query.equalTo("exists", true);
   query.equalTo("active", true);
 
-  const results = await query.find();
-  alert("Successfully retrieved " + results.length + " scores.");
-  // Do something with the returned Parse.Object values
+  //const results = await query.find();
+  query.find().then((results) => {
+    // Do something with the returned Parse.Object values
+    log(results.length)
+    res.status(200).send({status:"success",error: null, data: results, message:"Welcome To Records API"})
+  }, (error) => {
+    // Execute any logic that should take place if the save fails.
+    // error is a Parse.Error with an error code and message.
+    log('Failed to create new object, with error code: ' + error.message);
+  });
   
-  res.status(200).send({status:"success",error: null, data: results, message:"Welcome To Records API"})
 })
 
 app.post('/record/add', function(req, res) {
