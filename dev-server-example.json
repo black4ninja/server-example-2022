@@ -12,6 +12,7 @@
             "APP_NAME": "Server Example DEV",
             "PORT": 6535,
             "NODE_ENV": "development",
+            "DATABASE_URI": "mongodb://165.227.5.169:27017/server-example-dev",
             "APP_ID": "app_id",
             "MASTER_KEY": "master_key",
             "SECRET_KEY_USERS": "secret_key",

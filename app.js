@@ -15,6 +15,8 @@ const compression = require('compression')
 const cors = require('cors')
 const schedule = require('node-schedule')
 const _ = require('underscore')
+const ParseServer = require('parse-server').ParseServer
+const ParseDashboard = require('parse-dashboard')
 const log = console.log
 
 var app = express()
@@ -37,6 +39,32 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 app.use(bodyParser.text({ type: 'text/html' }))
 app.use(cookieParser())
+
+
+/*********************************************/
+/******************CONFIG*********************/
+/*********************************************/
+var databaseUri = process.env.DATABASE_URI
+if (!databaseUri) {
+    console.log('DATABASE_URI not specified, falling back to localhost.')
+}
+
+/*********************************************/
+/*********************************************/
+/*******************PARSE*********************/
+log(databaseUri)
+var api = new ParseServer({
+    databaseURI: databaseUri,
+    appId: process.env.APP_ID,
+    masterKey: process.env.MASTER_KEY,
+    serverURL: process.env.SERVER_URL,
+    appName: process.env.APP_NAME,
+})
+
+app.use('/parse', api)
+const parseDashboard = require('./parse/dashboard');
+app.use(parseDashboard.url, parseDashboard.dashboard);
+
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -95,6 +123,24 @@ const PORT = process.env.PORT
 app.set("port", PORT)
 httpServer.listen(PORT, function() {
     log('parse-server-example running on port ' + PORT + '.')
+
+
+    const GameScore = Parse.Object.extend("GameScore");
+    const gameScore = new GameScore();
+
+    gameScore.set("score", 1337);
+    gameScore.set("playerName", "Sean Plott");
+    gameScore.set("cheatMode", false);
+
+    gameScore.save()
+    .then((gameScore) => {
+      // Execute any logic that should take place after the object is saved.
+      log('New object created with objectId: ' + gameScore.id);
+    }, (error) => {
+      // Execute any logic that should take place if the save fails.
+      // error is a Parse.Error with an error code and message.
+      log('Failed to create new object, with error code: ' + error.message);
+    });
 })
 
 module.exports = app

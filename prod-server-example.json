@@ -12,6 +12,7 @@
             "APP_NAME": "Server Example PROD",
             "PORT": 6536,
             "NODE_ENV": "production",
+            "DATABASE_URI": "mongodb://localhost:27017/server-example-prod",
             "APP_ID": "app_id",
             "MASTER_KEY": "master_key",
             "SECRET_KEY_USERS": "secret_key",
