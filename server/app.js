@@ -70,6 +70,10 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header('Cross-Origin-Resource-Policy', 'same-site');
+  res.header("Access-Control-Allow-Credentials", "true ");
+  res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
+
   res.header('Cross-Origin-Resource-Policy', 'cross-origin');
   res.header('Cross-Origin-Embedder-Policy', 'credentialless');
   //res.setHeader("Content-Security-Policy", "script-src 'self' 'unsafe-inline' *");
@@ -101,6 +105,7 @@ app.get('/record', function(req, res) {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
     log('Failed to create new object, with error code: ' + error.message);
+    res.status(400).send({status:"error",error: error, data: null, message:"Welcome To Records API"})
   });
   
 })
@@ -109,9 +114,10 @@ app.post('/record/add', function(req, res) {
   const Usuarios = Parse.Object.extend("UsersSystem");
   const newuser = new Usuarios();
 
-  newuser.set("score", 1337);
-  newuser.set("playerName", "Sean Plott");
-  newuser.set("cheatMode", false);
+  newuser.set("firstname", req.body.firstName);
+  newuser.set("lastname", req.body.lastName);
+  newuser.set("active", true);
+  newuser.set("exists", true);
 
   newuser.save()
   .then((newUser) => {

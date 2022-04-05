@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
  
 const Record = (props) => (
  <tr>
-   <td>{props.record.name}</td>
-   <td>{props.record.position}</td>
-   <td>{props.record.level}</td>
+   <td>{props.record.firstname}</td>
+   <td>{props.record.lastname}</td>
    <td>
-     <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Editar</Link> |
+     <Link className="btn btn-link" to={`/edit/${props.record.objectId}`}>Editar</Link> |
      <button className="btn btn-link"
        onClick={() => {
-         props.deleteRecord(props.record._id);
+         props.deleteRecord(props.objectId);
        }}
      >
        Borrar
@@ -26,15 +25,20 @@ export default function RecordList() {
  useEffect(() => {
    async function getRecords() {
      const response = await fetch(`http://localhost:6535/record/`);
- 
+     console.log("enter")
      if (!response.ok) {
+       console.log("here")
        const message = `An error occurred: ${response.statusText}`;
        window.alert(message);
        return;
      }
  
+     
      const records = await response.json();
-     setRecords(records);
+     
+     console.log("RECORDS");
+     console.log(records["data"].length);
+     setRecords(records["data"]);
    }
  
    getRecords();
@@ -58,8 +62,8 @@ export default function RecordList() {
      return (
        <Record
          record={record}
-         deleteRecord={() => deleteRecord(record._id)}
-         key={record._id}
+         deleteRecord={() => deleteRecord(record.objectId)}
+         key={record.objectId}
        />
      );
    });
@@ -74,7 +78,6 @@ export default function RecordList() {
          <tr>
            <th>Nombre</th>
            <th>Apellidos</th>
-           
            <th>Acción</th>
          </tr>
        </thead>

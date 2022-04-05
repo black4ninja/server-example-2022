@@ -5,7 +5,7 @@ export default function Create() {
  const navigate = useNavigate();
 
  const [form, setForm] = useState({
-   firstName: "",
+   firstName: "Denisse",
    lastName: "",
    addresLine: "",
    addresLineTwo: "",
@@ -63,12 +63,12 @@ export default function Create() {
        <div className="form-group row">
         <div className="col-md-6">
          <label htmlFor="name">Nombre</label>
-         <input type="text" className="form-control" id="name" value={form.firstName} onChange={(e) => updateForm({ firstName: e.target.value })}
+         <input type="text" className="form-control" id="firstMame"  name="firstMame" value={form.firstName} onChange={(e) => updateForm({ firstName: e.target.value })}
          />
         </div>
         <div className="col-md-6">
           <label htmlFor="lastName">Apellidos</label>
-          <input type="text" className="form-control" id="lastName" value={form.lastName} onChange={(e) => updateForm({ lastName: e.target.value })}
+          <input type="text" className="form-control" id="lastName" name="lastName" value={form.lastName} onChange={(e) => updateForm({ lastName: e.target.value })}
           />
         </div>
        </div>
