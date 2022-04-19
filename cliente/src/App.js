@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
 import { Route, Routes } from "react-router-dom";
 
 import Create from "./components/create";
 import Navbar from "./components/navbar";
 import RecordList from './components/recordList';
+import Profile from './components/profile';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<RecordList />} />
         <Route exact path="/create" element={<Create />} />
+        <Route exact path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );
