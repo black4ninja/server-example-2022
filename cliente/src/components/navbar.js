@@ -42,6 +42,11 @@ export default function Navbar() {
              </NavLink>
           </li>
           <li className="nav-item">
+             <NavLink className="nav-link" to="/todos">
+               Todos
+             </NavLink>
+          </li>
+          <li className="nav-item">
             <AuthenticationExists />
           </li>
          </ul>

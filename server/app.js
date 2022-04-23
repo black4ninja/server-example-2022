@@ -110,6 +110,10 @@ app.get('/record', function(req, res) {
   
 })
 
+var todos = require('./1_global_module/routes/todos.routes')
+app.use('/todos', todos)
+
+
 app.post('/record/add', function(req, res) {
   const Usuarios = Parse.Object.extend("UsersSystem");
   const newuser = new Usuarios();
