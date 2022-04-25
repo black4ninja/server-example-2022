@@ -70,5 +70,4 @@ exports.AsyncBuscarPorId = async ( id, callback ) => {
   	} catch (error) {
       	callback(null,error)
   	}
-
 } 
