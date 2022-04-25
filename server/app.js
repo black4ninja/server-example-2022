@@ -113,6 +113,9 @@ app.get('/record', function(req, res) {
 var todos = require('./1_global_module/routes/todos.routes')
 app.use('/todos', todos)
 
+var bd_avanzadas = require('./1_global_module/routes/bd_avanzadas.routes')
+app.use('/bd_avanzadas', bd_avanzadas)
+
 
 app.post('/record/add', function(req, res) {
   const Usuarios = Parse.Object.extend("UsersSystem");
@@ -174,24 +177,6 @@ const PORT = process.env.PORT
 app.set("port", PORT)
 httpServer.listen(PORT, function() {
     log('parse-server-example running on port ' + PORT + '.')
-
-
-    const GameScore = Parse.Object.extend("GameScore");
-    const gameScore = new GameScore();
-
-    gameScore.set("score", 1337);
-    gameScore.set("playerName", "Sean Plott");
-    gameScore.set("cheatMode", false);
-
-    gameScore.save()
-    .then((gameScore) => {
-      // Execute any logic that should take place after the object is saved.
-      log('New object created with objectId: ' + gameScore.id);
-    }, (error) => {
-      // Execute any logic that should take place if the save fails.
-      // error is a Parse.Error with an error code and message.
-      log('Failed to create new object, with error code: ' + error.message);
-    });
 })
 
 module.exports = app
