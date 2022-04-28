@@ -1,9 +1,11 @@
 {
   "name": "server-example-2022",
   "version": "0.0.1",
-  "private":true,
+  "private": true,
   "main": "app.js",
   "dependencies": {
+    "accesscontrol": "^2.2.1",
+    "apollo-server-core": "^3.6.7",
     "body-parser": "*",
     "compression": "*",
     "cookie-parser": "*",
@@ -19,7 +21,7 @@
     "method-override": "*",
     "moment": "*",
     "multer": "*",
-    "multilang-sentiment":"*",
+    "multilang-sentiment": "*",
     "node-schedule": "*",
     "parse": "*",
     "parse-dashboard": "*",
@@ -27,4 +29,3 @@
     "underscore": "*"
   }
 }
-  

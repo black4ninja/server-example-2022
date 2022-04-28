@@ -40,6 +40,9 @@ app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 app.use(bodyParser.text({ type: 'text/html' }))
 app.use(cookieParser())
 
+app.use(express.json())
+const { users } = require('./rbac/user.data')
+app.use(setUser)
 
 /*********************************************/
 /******************CONFIG*********************/
@@ -82,8 +85,15 @@ app.use(function(req, res, next) {
   next();
 });
 
-
 // Routes HTTP GET requests to the specified path "/" with the specified callback function
+
+function setUser(req, res, next) {
+  const userId = req.body.userId
+  if (userId) {
+    req.user = users.find(user => user.id === userId)
+  }
+  next()
+}
 
 app.get('/test', function(req, res) {
     res.status(200).send({status:"success",message:"Welcome To Testing API"})
@@ -102,7 +112,7 @@ app.get('/record', function(req, res) {
     log(results.length)
     res.status(200).send({status:"success",error: null, data: results, message:"Welcome To Records API"})
   }, (error) => {
-    // Execute any logic that should take place if the save fails.
+    // Execute any loxgic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
     log('Failed to create new object, with error code: ' + error.message);
     res.status(400).send({status:"error",error: error, data: null, message:"Welcome To Records API"})
@@ -113,6 +123,14 @@ app.get('/record', function(req, res) {
 var todos = require('./1_global_module/routes/todos.routes')
 app.use('/todos', todos)
 
+var projects = require('./1_global_module/routes/projects.routes')
+app.use('/projects', projects)
+
+var books = require('./1_global_module/routes/books.routes')
+app.use('/books', books)
+
+var videos = require('./1_global_module/routes/videos.routes')
+app.use('/videos', videos)
 
 app.post('/record/add', function(req, res) {
   const Usuarios = Parse.Object.extend("UsersSystem");
@@ -175,8 +193,23 @@ app.set("port", PORT)
 httpServer.listen(PORT, function() {
     log('parse-server-example running on port ' + PORT + '.')
 
+    var UserSystem = Parse.Object.extend("UsersSystem");
+    const user = new UserSystem();
 
-    const GameScore = Parse.Object.extend("GameScore");
+    var Permission = Parse.Object.extend("Permissions");
+    const permiso = new Permission()
+    permiso.set("objectId", "20IS3wrGxZ")
+
+    user.set("permissionPtr", permiso)
+    user.set("email", "denmf@meeplab.com")
+    
+    user.save()
+      .then((user) => {
+        log('New object created with objectId: ' + gameScore.id);
+      }, (error) => {
+        log('Failed to create new object, with error code: ' + error.message);
+    });
+    /*const GameScore = Parse.Object.extend("GameScore");
     const gameScore = new GameScore();
 
     gameScore.set("score", 1337);
@@ -191,7 +224,7 @@ httpServer.listen(PORT, function() {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and message.
       log('Failed to create new object, with error code: ' + error.message);
-    });
+    });*/
 })
 
 module.exports = app
