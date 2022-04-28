@@ -205,7 +205,7 @@ httpServer.listen(PORT, function() {
     
     user.save()
       .then((user) => {
-        log('New object created with objectId: ' + gameScore.id);
+        log('New object created with objectId: ' + user.id);
       }, (error) => {
         log('Failed to create new object, with error code: ' + error.message);
     });
