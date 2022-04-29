@@ -6,11 +6,11 @@ module.exports = function(req, res, next) {
       if(result){
         next();
       }else{
-        res.redirect("/user/login");
+        res.redirect("/books/");
       }
     });
   }else{
-    res.redirect("/user/login");
+    res.send("Not allowed")
   }
     
 }

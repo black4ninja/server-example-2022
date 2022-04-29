@@ -1,6 +1,2 @@
-GET http://localhost:6535/projects
+GET http://localhost:6535/books/index
 Content-type: application/json
-
-{
-  "userId": 1
-}

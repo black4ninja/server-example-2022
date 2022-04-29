@@ -193,7 +193,7 @@ app.set("port", PORT)
 httpServer.listen(PORT, function() {
     log('parse-server-example running on port ' + PORT + '.')
 
-    var UserSystem = Parse.Object.extend("UsersSystem");
+    /*var UserSystem = Parse.Object.extend("UsersSystem");
     const user = new UserSystem();
 
     var Permission = Parse.Object.extend("Permissions");
@@ -208,7 +208,7 @@ httpServer.listen(PORT, function() {
         log('New object created with objectId: ' + user.id);
       }, (error) => {
         log('Failed to create new object, with error code: ' + error.message);
-    });
+    });*/
     /*const GameScore = Parse.Object.extend("GameScore");
     const gameScore = new GameScore();
 
